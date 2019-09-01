@@ -1,0 +1,27 @@
+[
+  {
+    "firstName": "Alexander",
+    "otherNames": "Protonmail",
+    "emailAddress": "protonmail@protonmail.com",
+    "phoneNumber": "07488901391",
+    "address": {
+      "street": "lolhi",
+      "town": "London",
+      "country": "England"
+    }
+  },
+  {
+    "firstName": "Test",
+    "otherNames": "Person",
+    "emailAddress": "text@example.com",
+    "address": {
+      "street": "Random Street",
+      "town": "Middle of Nowhere",
+      "country": "Timbuktu"
+    }
+  },
+  {
+    "firstName": "Mostly",
+    "otherNames": "Missing"
+  }
+]
