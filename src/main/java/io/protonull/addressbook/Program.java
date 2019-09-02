@@ -4,6 +4,7 @@ import io.protonull.addressbook.api.IAddressBook;
 import io.protonull.addressbook.api.IMenu;
 import io.protonull.addressbook.impl.menus.MainMenu;
 import io.protonull.addressbook.impl.json.JSONAddressBook;
+import io.protonull.addressbook.utilities.ConsoleUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -31,6 +32,7 @@ public final class Program {
             if (menu != null) {
                 menu = menu.getNextMenu();
             }
+            ConsoleUtilities.clear();
             displayMenuText();
         }
         addressBook.save();
