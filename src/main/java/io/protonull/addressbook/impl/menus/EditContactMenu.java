@@ -4,6 +4,7 @@ import io.protonull.addressbook.Program;
 import io.protonull.addressbook.api.IContactEntry;
 import io.protonull.addressbook.api.IContractAddress;
 import io.protonull.addressbook.api.IMenu;
+import io.protonull.addressbook.utilities.ConsoleUtilities;
 
 public class EditContactMenu implements IMenu {
 
@@ -50,7 +51,7 @@ public class EditContactMenu implements IMenu {
             case "DONE":
                 Program.addressBook.getEntries().remove(this.entry);
                 Program.addressBook.getEntries().add(this.entry);
-                System.out.println("Added this contact to the address book.");
+                ConsoleUtilities.printLine("Added this contact to the address book.");
             case "BACK":
                 Program.gotoMainMenu();
                 return;
@@ -59,11 +60,11 @@ public class EditContactMenu implements IMenu {
             String firstName = command.substring(setFirstNameCommand.length() + 1);
             if (firstName.isEmpty()) {
                 this.entry.setFirstName(null);
-                System.out.println("Cleared this contact of its first name.");
+                ConsoleUtilities.printLine("Cleared this contact of its first name.");
             }
             else {
                 this.entry.setFirstName(firstName);
-                System.out.println("Set the contact's first name to: " + firstName);
+                ConsoleUtilities.printLine("Set the contact's first name to: " + firstName);
             }
             return;
         }

@@ -4,13 +4,12 @@ import io.protonull.addressbook.api.IAddressBook;
 import io.protonull.addressbook.api.IContactEntry;
 import io.protonull.addressbook.impl.ContactAddress;
 import io.protonull.addressbook.impl.ContactEntry;
+import io.protonull.addressbook.utilities.ConsoleUtilities;
 import io.protonull.addressbook.utilities.StringUtilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSONAddressBook implements IAddressBook {
-
-    private static Logger logger = LoggerFactory.getLogger(JSONAddressBook.class);
 
     private List<IContactEntry> entries = new ArrayList<>();
     private File fileLocation = null;
@@ -38,21 +35,21 @@ public class JSONAddressBook implements IAddressBook {
     @Override
     public void load() {
         if (this.fileLocation == null) {
-            logger.warn("Cannot load address book as the file location is invalid.");
+            ConsoleUtilities.printWarning("Cannot load an address book as the file location is invalid.");
             return;
         }
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(this.fileLocation)) {
             Object json = jsonParser.parse(reader);
             if (!(json instanceof JSONArray)) {
-                logger.warn("Cannot load address book as the file is malformed.");
+                ConsoleUtilities.printWarning("Cannot load address book as the file is malformed.");
                 return;
             }
             this.entries.clear();
             for (Object rawEntry : (JSONArray) json) {
                 if (!(rawEntry instanceof JSONObject)) {
-                    logger.warn("The following entry is being skipped, it's not a json object:");
-                    logger.warn(rawEntry.toString());
+                    ConsoleUtilities.printWarning(
+                            "The following entry is being skipped, it's not a json object: " + rawEntry.toString());
                     continue;
                 }
                 JSONObject entry = (JSONObject) rawEntry;
@@ -72,8 +69,9 @@ public class JSONAddressBook implements IAddressBook {
                     if (addressRaw == null) {}
                     // Otherwise ensure that it's an object
                     else if (!(addressRaw instanceof JSONObject)) {
-                        logger.warn("The following entry is being skipped, its address is not a JSON object.");
-                        logger.warn(rawEntry.toString());
+                        ConsoleUtilities.printWarning(
+                                "The following entry is being skipped, its address is not a JSON object: " +
+                                rawEntry.toString());
                         continue;
                     }
                     // Otherwise attempt to parse address
@@ -88,17 +86,19 @@ public class JSONAddressBook implements IAddressBook {
                 }
                 // Add the entry to the entry list
                 this.entries.add(contactEntry);
-                logger.info("The following entry has been loaded: " + contactEntry.toString());
+                ConsoleUtilities.printLine("The following entry has been loaded: " + contactEntry.toString());
             }
         }
         catch (FileNotFoundException error) {
-            logger.info("Could not find an existing address book, is this a new one?");
-            return;
+            ConsoleUtilities.printLine("Could not find an existing address book, is this a new one?");
         }
         catch (ParseException error) {
+            ConsoleUtilities.printError("Could not load that address book, there was an error in parsing.");
             error.printStackTrace();
         }
         catch (IOException error) {
+            ConsoleUtilities.printError(
+                    "Could not load that address book, there was an accessing or reading the file.");
             error.printStackTrace();
         }
     }

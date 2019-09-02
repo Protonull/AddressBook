@@ -3,6 +3,7 @@ package io.protonull.addressbook.impl.menus;
 import io.protonull.addressbook.Program;
 import io.protonull.addressbook.api.IMenu;
 import io.protonull.addressbook.impl.ContactEntry;
+import io.protonull.addressbook.utilities.ConsoleUtilities;
 
 public class MainMenu implements IMenu {
 
@@ -30,7 +31,7 @@ public class MainMenu implements IMenu {
         else if (command.equalsIgnoreCase("CLOSE")) {
             Program.addressBook.save();
             Program.running = false;
-            System.out.println("Closing.");
+            ConsoleUtilities.printLine("Closing.");
         }
     }
 

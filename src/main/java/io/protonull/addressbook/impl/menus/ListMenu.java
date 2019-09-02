@@ -4,6 +4,7 @@ import io.protonull.addressbook.Program;
 import io.protonull.addressbook.api.IContactEntry;
 import io.protonull.addressbook.api.IContractAddress;
 import io.protonull.addressbook.api.IMenu;
+import io.protonull.addressbook.utilities.ConsoleUtilities;
 
 public class ListMenu implements IMenu {
 
@@ -42,7 +43,7 @@ public class ListMenu implements IMenu {
         }
         else if (command.equalsIgnoreCase("DELETE") || command.equalsIgnoreCase("REMOVE")) {
             Program.addressBook.getEntries().remove(currentIndex);
-            System.out.println("Removed that entry from the address book.");
+            ConsoleUtilities.printLine("Removed that entry from the address book.");
         }
         else if (command.equalsIgnoreCase("EDIT")) {
             Program.gotoNextMenu(new EditContactMenu(Program.addressBook.getEntries().get(this.currentIndex)));

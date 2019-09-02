@@ -16,6 +16,7 @@ public final class Program {
     public static boolean running = true;
 
     public static void main(String[] arguments) {
+        System.setErr(System.out);
         gotoNextMenu(new MainMenu());
         addressBook = new JSONAddressBook();
         addressBook.setLocation(new File(System.getProperty("user.dir"), "/addressbook.json"));
@@ -25,7 +26,7 @@ public final class Program {
             ConsoleUtilities.clear();
             // If the menu stack somehow doesn't have a menu, exit out
             if (menus.isEmpty()) {
-                System.out.println("Could not find a menu, exiting.");
+                ConsoleUtilities.printLine("Could not find a menu, exiting.");
                 running = false;
                 break;
             }
@@ -40,17 +41,17 @@ public final class Program {
             if (displayText != null) {
                 for (String line : displayText) {
                     if (line == null || line.isEmpty()) {
-                        System.out.println(" ");
+                        ConsoleUtilities.printLine(" ");
                     }
                     else {
-                        System.out.println(line);
+                        ConsoleUtilities.printLine(line);
                     }
                 }
             }
             // And print its request text, if it has it
             String requestText = menu.getRequestText();
             if (requestText != null && !requestText.isEmpty()) {
-                System.out.print(requestText + " ");
+                ConsoleUtilities.print(requestText + " ");
             }
             // Then have the menu handle the response
             menu.handleCommand(ConsoleUtilities.readLine());

@@ -33,4 +33,28 @@ public final class ConsoleUtilities {
         return "";
     }
 
+    public static void print(String text) {
+        System.out.print(text);
+    }
+
+    public static void printLine(String text) {
+        System.out.println(text);
+    }
+
+    public static void printWarning(String text) {
+        if (System.err != null) {
+            if (text != null && !text.isEmpty()) {
+                System.err.println("[WARNING] " + text);
+            }
+        }
+    }
+
+    public static void printError(String text) {
+        if (System.err != null) {
+            if (text != null && !text.isEmpty()) {
+                System.err.println("[ERROR] " + text);
+            }
+        }
+    }
+
 }
