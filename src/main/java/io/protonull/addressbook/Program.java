@@ -5,14 +5,11 @@ import io.protonull.addressbook.api.IMenu;
 import io.protonull.addressbook.impl.menus.MainMenu;
 import io.protonull.addressbook.impl.json.JSONAddressBook;
 import io.protonull.addressbook.utilities.ConsoleUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Scanner;
 
 public final class Program {
 
-    private static Logger logger = LoggerFactory.getLogger(Program.class);
 
     public static IAddressBook addressBook;
     public static IMenu menu = null;
