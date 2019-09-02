@@ -2,9 +2,9 @@ package io.protonull.addressbook.api;
 
 public interface IMenu {
 
-    IMenu getNextMenu();
-
     String[] getDisplayText();
+
+    String getRequestText();
 
     void handleCommand(String command);
 

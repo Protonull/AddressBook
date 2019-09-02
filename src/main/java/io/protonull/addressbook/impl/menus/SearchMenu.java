@@ -7,22 +7,20 @@ import io.protonull.addressbook.utilities.StringUtilities;
 
 public class SearchMenu implements IMenu {
 
-    private IMenu next = this;
-
     @Override
-    public IMenu getNextMenu() {
-        return this.next;
+    public String[] getDisplayText() {
+        return null;
     }
 
     @Override
-    public String[] getDisplayText() {
-        return new String[] { "Enter what you'd like to search for (or type EXIT):-" };
+    public String getRequestText() {
+        return "Enter what you'd like to search for (or type EXIT):";
     }
 
     @Override
     public void handleCommand(String command) {
         if (command.equalsIgnoreCase("EXIT")) {
-            this.next = new MainMenu();
+            Program.gotoMainMenu();
         }
         else {
             IContactEntry found = null;
@@ -55,7 +53,7 @@ public class SearchMenu implements IMenu {
             else {
                 System.out.println("Found a match, or the closest thing to a match:-");
                 System.out.println(found.toString());
-                this.next = new MainMenu();
+                Program.gotoMainMenu();
             }
         }
     }

@@ -7,13 +7,7 @@ import io.protonull.addressbook.api.IMenu;
 
 public class ListMenu implements IMenu {
 
-    private IMenu next = this;
     private int currentIndex = 0;
-
-    @Override
-    public IMenu getNextMenu() {
-        return this.next;
-    }
 
     @Override
     public String[] getDisplayText() {
@@ -25,26 +19,33 @@ public class ListMenu implements IMenu {
         IContractAddress address = entry.getAddress();
         return new String[] {
                 "Current Contact In List:-",
+                null,
                 "First Name: " + (firstName == null || firstName.isEmpty() ? "Not set." : firstName),
                 "Other Names: " + (otherNames == null || otherNames.isEmpty() ? "None set." : otherNames),
                 "Email: " + (email == null || email.isEmpty() ? "Not set." : email),
                 "Phone: " + (phone == null || phone.isEmpty() ? "Not set." : phone),
                 "Address: " + (address == null ? "Not set." : address.toString()),
-                "Please enter a command: BACK, REMOVE, EDIT, NEXT, PREV"
+                null,
+                "Available commands: BACK, REMOVE, EDIT, NEXT, PREV"
         };
+    }
+
+    @Override
+    public String getRequestText() {
+        return "Please enter a command:";
     }
 
     @Override
     public void handleCommand(String command) {
         if (command.equalsIgnoreCase("BACK")) {
-            this.next = new MainMenu();
+            Program.gotoPreviousMenu();
         }
         else if (command.equalsIgnoreCase("DELETE") || command.equalsIgnoreCase("REMOVE")) {
             Program.addressBook.getEntries().remove(currentIndex);
             System.out.println("Removed that entry from the address book.");
         }
         else if (command.equalsIgnoreCase("EDIT")) {
-            this.next = new EditContactMenu(Program.addressBook.getEntries().get(this.currentIndex));
+            Program.gotoNextMenu(new EditContactMenu(Program.addressBook.getEntries().get(this.currentIndex)));
         }
         else if (command.equalsIgnoreCase("PREV")) {
             if (--this.currentIndex < 0) {

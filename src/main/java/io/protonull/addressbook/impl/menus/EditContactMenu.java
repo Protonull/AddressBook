@@ -9,16 +9,10 @@ public class EditContactMenu implements IMenu {
 
     private static final String setFirstNameCommand = "SET FIRST_NAME";
 
-    private IMenu next = this;
     private IContactEntry entry;
 
     public EditContactMenu(IContactEntry entry) {
         this.entry = entry;
-    }
-
-    @Override
-    public IMenu getNextMenu() {
-        return this.next;
     }
 
     @Override
@@ -30,13 +24,20 @@ public class EditContactMenu implements IMenu {
         IContractAddress address = this.entry.getAddress();
         return new String[] {
                 "Current Contact:-",
+                null,
                 "First Name: " + (firstName == null || firstName.isEmpty() ? "Not set." : firstName),
                 "Other Names: " + (otherNames == null || otherNames.isEmpty() ? "None set." : otherNames),
                 "Email: " + (email == null || email.isEmpty() ? "Not set." : email),
                 "Phone: " + (phone == null || phone.isEmpty() ? "Not set." : phone),
                 "Address: " + (address == null ? "Not set." : address.toString()),
-                "Please enter a command: SET [FIRST_NAME, OTHER_NAMES, EMAIL, PHONE, ADDRESS], DONE, BACK"
+                null,
+                "Available commands: SET [FIRST_NAME, OTHER_NAMES, EMAIL, PHONE, ADDRESS], DONE, BACK"
         };
+    }
+
+    @Override
+    public String getRequestText() {
+        return "Please enter a command:";
     }
 
     @Override
@@ -51,7 +52,7 @@ public class EditContactMenu implements IMenu {
                 Program.addressBook.getEntries().add(this.entry);
                 System.out.println("Added this contact to the address book.");
             case "BACK":
-                this.next = new MainMenu();
+                Program.gotoMainMenu();
                 return;
         }
         if (normaliseCommand.startsWith(setFirstNameCommand)) {

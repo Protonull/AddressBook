@@ -6,34 +6,31 @@ import io.protonull.addressbook.impl.ContactEntry;
 
 public class MainMenu implements IMenu {
 
-    private IMenu next = null;
-
     @Override
-    public IMenu getNextMenu() {
-        return this.next == null ? this : this.next;
+    public String[] getDisplayText() {
+        return new String[] { "Available commands: LIST, NEW, SEARCH, CLOSE" };
     }
 
     @Override
-    public String[] getDisplayText() {
-        return new String[] { "Please enter a command: LIST, NEW, SEARCH, CLOSE" };
+    public String getRequestText() {
+        return "Please enter a command:";
     }
 
     @Override
     public void handleCommand(String command) {
         if (command.equalsIgnoreCase("NEW")) {
-            this.next = new EditContactMenu(new ContactEntry());
+            Program.gotoNextMenu(new EditContactMenu(new ContactEntry()));
         }
         else if (command.equalsIgnoreCase("LIST")) {
-            this.next = new ListMenu();
+            Program.gotoNextMenu(new ListMenu());
         }
         else if (command.equalsIgnoreCase("SEARCH")) {
-            this.next = new SearchMenu();
+            Program.gotoNextMenu(new SearchMenu());
         }
         else if (command.equalsIgnoreCase("CLOSE")) {
             Program.addressBook.save();
-            System.out.println("Closing.");
-            Program.menu = null;
             Program.running = false;
+            System.out.println("Closing.");
         }
     }
 
