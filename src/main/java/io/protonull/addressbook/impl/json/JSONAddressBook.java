@@ -4,6 +4,7 @@ import io.protonull.addressbook.api.IAddressBook;
 import io.protonull.addressbook.api.IContactEntry;
 import io.protonull.addressbook.impl.ContactAddress;
 import io.protonull.addressbook.impl.ContactEntry;
+import io.protonull.addressbook.utilities.StringUtilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -57,13 +58,13 @@ public class JSONAddressBook implements IAddressBook {
                 JSONObject entry = (JSONObject) rawEntry;
                 ContactEntry contactEntry = new ContactEntry();
                 // Parse First Name
-                contactEntry.setFirstName(JSONParseUtilities.getString(entry.get("firstName")));
+                contactEntry.setFirstName(StringUtilities.getString(entry.get("firstName")));
                 // Parse Other Names
-                contactEntry.setOtherNames(JSONParseUtilities.getString(entry.get("otherNames")));
+                contactEntry.setOtherNames(StringUtilities.getString(entry.get("otherNames")));
                 // Parse Email Address
-                contactEntry.setEmailAddress(JSONParseUtilities.getString(entry.get("emailAddress")));
+                contactEntry.setEmailAddress(StringUtilities.getString(entry.get("emailAddress")));
                 // Parse Email Address
-                contactEntry.setPhoneNumber(JSONParseUtilities.getString(entry.get("phoneNumber")));
+                contactEntry.setPhoneNumber(StringUtilities.getString(entry.get("phoneNumber")));
                 // Parse Address
                 if (entry.containsKey("address")) {
                     Object addressRaw = entry.get("address");
@@ -79,9 +80,9 @@ public class JSONAddressBook implements IAddressBook {
                     else {
                         JSONObject address = (JSONObject) addressRaw;
                         ContactAddress contactAddress = new ContactAddress();
-                        contactAddress.setStreet(JSONParseUtilities.getString(address.get("street")));
-                        contactAddress.setTown(JSONParseUtilities.getString(address.get("town")));
-                        contactAddress.setCountry(JSONParseUtilities.getString(address.get("country")));
+                        contactAddress.setStreet(StringUtilities.getString(address.get("street")));
+                        contactAddress.setTown(StringUtilities.getString(address.get("town")));
+                        contactAddress.setCountry(StringUtilities.getString(address.get("country")));
                         contactEntry.setAddress(contactAddress);
                     }
                 }
