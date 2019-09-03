@@ -1,5 +1,6 @@
 package io.protonull.addressbook.utilities;
 
+import io.protonull.addressbook.Program;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -27,8 +28,10 @@ public final class ConsoleUtilities {
     }
 
     public static String readLine() {
-        while (scanner.hasNextLine()) {
-            return scanner.nextLine();
+        while (Program.running) {
+            if (scanner.hasNextLine()) {
+                return scanner.nextLine();
+            }
         }
         return "";
     }
