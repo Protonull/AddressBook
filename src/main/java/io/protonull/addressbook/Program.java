@@ -53,8 +53,9 @@ public final class Program {
             if (requestText != null && !requestText.isEmpty()) {
                 ConsoleUtilities.print(requestText + " ");
             }
-            // Then have the menu handle the response
-            menu.handleCommand(ConsoleUtilities.readLine());
+            // The menu is then given the opportunity to process, which
+            // by default will read the next line as a command input
+            menu.process();
         }
         addressBook.save();
     }
