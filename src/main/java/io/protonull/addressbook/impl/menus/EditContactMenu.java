@@ -53,7 +53,7 @@ public class EditContactMenu implements IMenu {
                 Program.addressBook.getEntries().add(this.entry);
                 ConsoleUtilities.printLine("Added this contact to the address book.");
             case "BACK":
-                Program.gotoMainMenu();
+                Program.gotoPreviousMenu();
                 return;
         }
         if (normaliseCommand.startsWith(setFirstNameCommand)) {
